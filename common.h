@@ -3,8 +3,8 @@
 
 #include <p33FJ256MC710.h>
 
-// Register bitleri için makrolar
-#define SETBIT(reg)  (reg = 1)
-#define CLEARBIT(reg) (reg = 0)
+// Doğru Bitwise Makrolar (Register'ın diğer bitlerine zarar vermez)
+#define SETBIT(reg, bit)   ((reg) |= (1 << (bit)))
+#define CLEARBIT(reg, bit) ((reg) &= ~(1 << (bit)))
 
 #endif

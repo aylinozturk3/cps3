@@ -1,3 +1,6 @@
+#define FCY 12800000UL
+#include <libpic30.h>
+
 #include <xc.h>
 #include <p33FJ256MC710.h>
 
@@ -11,10 +14,10 @@
 #include "led.h"
 
 #include "uart.h" // uart2_send_8 için
-#include "common.h"
+#include "types.h"
 
 // FCY tanımı (Zamanlama fonksiyonları için kritik)
-#define FCY 12800000UL
+
 /*
  * PWM code
  */
@@ -39,15 +42,6 @@
 
 //SERVO X-OC7, SERVO Y -OC8
 
-// KÜTÜPHANEDEN ARAMASIN DİYE İSMİNİ DEĞİŞTİRİYORUZ
-void __delay_ms(unsigned int ms) {
-    unsigned long i, j;
-    for (i = 0; i < ms; i++) {
-        for (j = 0; j < 12800; j++) {
-            __asm__("nop");
-        }
-    }
-}
 
 
 
@@ -85,7 +79,7 @@ void adc_touchscreen_init(void){
     AD1CON3bits.SAMC = 0x1F;       // 31 Tad
     AD1CON3bits.ADCS = 0x02;       // Tad = 3Tcy
     
-    // E1, E2, E3 başlangıçta çıkış yapılıyor
+   
     CLEARBIT(TRISEbits.TRISE1); 
     CLEARBIT(TRISEbits.TRISE2); 
     CLEARBIT(TRISEbits.TRISE3); 
@@ -200,7 +194,7 @@ void touchscreen_direction_select(char axis)
 Pos ADC_touchscreen_read(void)
 {   
     Pos position;
-    char uart_buffer[32]; // Buffer overflow'u önlemek için 32 byte yapıldı
+    //char uart_buffer[32]; // Buffer overflow'u önlemek için 32 byte yapıldı
     
     // --- X okuma ---
     touchscreen_direction_select('X');
@@ -269,7 +263,7 @@ void mainloop(void)
         
 		   
       
-        
+        /*
 		servo_set_ms('X', 2.0); 
 		servo_set_ms('Y', 2.0); 
 		__delay_ms(3000);
@@ -281,7 +275,7 @@ void mainloop(void)
 		servo_set_ms('Y', 1.2); 
 	    __delay_ms(3000);
 		
-		
+		 */
        
             
         

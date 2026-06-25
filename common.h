@@ -1,5 +1,5 @@
-#ifndef __TYPES_H__
-#define __TYPES_H__
+#ifndef COMMON_H
+#define COMMON_H
 
 #ifndef FALSE
 #define FALSE 0x00
@@ -21,4 +21,4 @@ typedef signed char int8_t;         /* Signed 8 bit integer. */
 typedef signed int int16_t;         /* Signed 16 bit integer. */
 typedef signed long int int32_t;    /* Signed 32 bit integer. */
 
-#endif //__TYPES_H__
+#endif 

@@ -1,4 +1,5 @@
-#include <xc.h>
+#define FCY 12800000UL
+#include <libpic30.h>
 #include <p33FJ256MC710.h>
 
 
@@ -8,10 +9,10 @@
 #include "led.h"
 #include "lab05.h"
 #include "uart.h"
-#include "common.h"
+#include "types.h"
 
 /* FCY Tanımı */
-#define FCY 12800000UL
+
 
 
 /* Configuration of the Chip */

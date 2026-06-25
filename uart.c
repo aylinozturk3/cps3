@@ -4,13 +4,14 @@
  *
  * Created on June 1, 2026, 2:16 PM
  */
-
+#define FCY 12800000UL
+#include <libpic30.h>
 
 
 #include "uart.h"
 #include <xc.h>
 #include <stdint.h>
-#include "common.h"
+#include "types.h"
 
 
 // Note: Ensure RX_BUFFER_SIZE is defined in your uart.h file
@@ -118,7 +119,7 @@ void uart2_init(unsigned long baud, unsigned int byteformat, unsigned int mode)
     U2MODEbits.PDSEL = 0;   // 8-bit data, no parity
 
     // E?er sinyal terslenmi?se bunu d�zeltir:
-    U2STAbits.UTXINV = 1;   // TX pinini tersle (K?sa devreden sonra hat y�n� de?i?mi? olabilir)
+    U2STAbits.UTXINV = 1;   // TX pinini tersle 
     U2MODEbits.UARTEN = 1;
 }
 

@@ -9,7 +9,7 @@
 #include "led.h"
 #include "lab05.h"
 #include "uart.h"
-#include "types.h"
+#include "common.h"
 
 /* FCY Tanımı */
 
@@ -32,7 +32,7 @@
 
 int main(){
     
-    
+    //uart2_init(9600, 0, 0);
     mainloop();
     // Stop
     while(1)

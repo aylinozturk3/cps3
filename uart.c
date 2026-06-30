@@ -119,9 +119,9 @@ void uart2_init(unsigned long baud, unsigned int byteformat, unsigned int mode)
     U2MODEbits.PDSEL = 0;   // 8-bit data, no parity
 
     // E?er sinyal terslenmi?se bunu d�zeltir:
-    U2STAbits.UTXINV = 1;   // TX pinini tersle 
+    //U2STAbits.UTXINV = 1;   // TX pinini tersle 
     U2MODEbits.UARTEN = 1;
-}
+} 
 
 void uart2_send_8(int8_t data){
     while (U2STAbits.UTXBF); // Block execution if hardware transmit register is full

@@ -8,15 +8,15 @@
 #include <stdio.h>
 
 
-/* Kendi Kütüphanelerimiz */
+
 #include "lab05.h"
 #include "lcd.h"
 #include "led.h"
 
-#include "uart.h" // uart2_send_8 için
-#include "types.h"
+#include "uart.h" // uart2_send_8 
+#include "common.h"
 
-// FCY tanımı (Zamanlama fonksiyonları için kritik)
+
 
 /*
  * PWM code
@@ -49,12 +49,11 @@
 
     while(*str) {
 
-        uart2_send_8((int16_t)*str);
+        uart2_send_8(*str);
 
         str++;
 
     }
-
 } 
 
 
@@ -213,7 +212,7 @@ Pos ADC_touchscreen_read(void)
     __delay_ms(10);               // Sinyalin oturması için döngüsel 10ms bekleme
     AD1CHS0bits.CH0SA = 9;        
     SETBIT(AD1CON1bits.SAMP);     
-    __delay_ms(2);                // --- DÜZELTME 3: Kapasitörün dolması için gereken süre ---
+    __delay_ms(2);                
     CLEARBIT(AD1CON1bits.SAMP);   
     while(!AD1CON1bits.DONE);     
     position.y = ADC1BUF0;
@@ -224,10 +223,10 @@ Pos ADC_touchscreen_read(void)
     
     // Raspberry Pi UART Çıktısı
 
-    /*
-    sprintf(uart_buffer, "X:%u Y:%u\n", position.x, position.y);
-    uart2_send(uart_buffer);
-    */
+    //
+    // sprintf(uart_buffer, "X:%u Y:%u\n", position.x, position.y);
+    //uart2_send(uart_buffer);
+    ////
                
     
     return position;
@@ -239,12 +238,15 @@ Pos ADC_touchscreen_read(void)
 void mainloop(void)
 {
     
-
+    led_initialize(); 
  
-   
+    adc_touchscreen_init();
     servo_timer_init('X');
     servo_timer_init('Y');
     
+    SETLED(LED1_PORT);          // Buraya kadar geldi = init tamam
+    __delay_ms(500);
+    CLEARLED(LED1_PORT);
     
     while(1)
     {
@@ -252,30 +254,40 @@ void mainloop(void)
         
 	    servo_set_ms('X', 1.2); // in microsec
 	    servo_set_ms('Y', 1.2); 
-	    __delay_ms(3000);
-	
+	    __delay_ms(1000);
+         SETLED(LED2_PORT);
+	    ADC_touchscreen_read();
+        CLEARLED(LED2_PORT);        // ADC BİTTİYSE söner
+        SETLED(LED3_PORT);          // ADC başarıyla bitti kanıtı
+        __delay_ms(1000);
+        CLEARLED(LED3_PORT);
+        
+        __delay_ms(1000);
+       
       
             
 	    servo_set_ms('X', 1.2); 
 		servo_set_ms('Y', 2.0); 
-		__delay_ms(3000);
-	   
+		__delay_ms(1000);
+	    ADC_touchscreen_read();
+        __delay_ms(2000);
         
 		   
       
-        /*
+        
 		servo_set_ms('X', 2.0); 
 		servo_set_ms('Y', 2.0); 
-		__delay_ms(3000);
-	
+		__delay_ms(1000);
+	    ADC_touchscreen_read();
+        __delay_ms(2000);
 			 
             
            
 		servo_set_ms( 'X', 2.0); 
 		servo_set_ms('Y', 1.2); 
-	    __delay_ms(3000);
-		
-		 */
+	    __delay_ms(1000);
+		ADC_touchscreen_read();
+		__delay_ms(2000);
        
             
         
